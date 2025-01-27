@@ -9,7 +9,7 @@
 
 # It can fail with
 
-cask "PuppetBridgeConsumerApp" do
+cask "consumer-app" do
   version "1.0.0"
   sha256 ""
 
@@ -21,11 +21,7 @@ cask "PuppetBridgeConsumerApp" do
   mac_address = `ifconfig #{default_interface} | awk '/ether/{print $2}'`.strip
 
   url "https://prod.puppetbridge.link/api/download/latest?osType=darwin&archType=#{arch}&macAddress=#{mac_address}",
-      verify: false  # Skip SSL verification
-
-  url "https://prod.puppetbridge.link/api/download/script?macAddress=#{mac_address}&osType=darwin&archType=#{arch}",
-      verify: false,
-      using: :fake  # Don't try to install this URL
+      :no_verify => true
 
   name "Puppet Bridge Consumer App"
   desc "Linking Puppets with the World"
